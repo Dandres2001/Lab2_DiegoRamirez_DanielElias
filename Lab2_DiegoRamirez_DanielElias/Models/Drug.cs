@@ -21,7 +21,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Models
         public string Factory { get; set; }
 
         [Required]
-        public double Price { get; set; }
+        public string Price { get; set; }
 
         [Required]
         public int Stock { get; set; }
