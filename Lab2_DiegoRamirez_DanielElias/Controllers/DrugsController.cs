@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
+
 using Lab2_DiegoRamirez_DanielElias.Models.Data;
 using Microsoft.VisualBasic;
 using System.IO;
@@ -62,6 +63,21 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                     while (!csvReader.EndOfData)
                     {
 
+                       
+                       
+                            string[] fields = lines[i].Split(",");
+                            var newDrug = new Models.Drug();
+                            newDrug.ID = Convert.ToInt32(fields[0]);
+                            newDrug.Name = fields[1];
+                            newDrug.Description = fields[2];
+                            newDrug.Factory = fields[3];
+                            newDrug.Price = fields[4];
+                            newDrug.Stock = Convert.ToInt32(fields[5]);
+                            Singleton.Instance.DrugsList.AddLast(newDrug);
+                        
+                    }
+
+
                         string[] fields = lines[i].Split(",");
                         var newDrug = new Models.Drug();
                         newDrug.ID = Convert.ToInt32(fields[0]);
@@ -72,7 +88,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                         newDrug.Stock = Convert.ToInt32(fields[5]);
                         Singleton.Instance.DrugsList.AddLast(newDrug);
                     }
-=======
+
 
                         for (int i = 0; i < 5; i++)
                         {
@@ -88,6 +104,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                             newDrug.Stock = Convert.ToInt32((fields[5]));
                             Singleton.Instance.DrugsList.AddLast(newDrug);
                         }
+
 
                 }
 
