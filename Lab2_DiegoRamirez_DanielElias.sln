@@ -6,7 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab2_DiegoRamirez_DanielElias", "Lab2_DiegoRamirez_DanielElias\Lab2_DiegoRamirez_DanielElias.csproj", "{8F97E01C-7374-4EF5-8ED0-C6B06D7EE869}"
 
 EndProject
+
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIbreriaRD", "..\LIbreriaRD\LIbreriaRD.csproj", "{7B9AC4E4-3627-482A-AB4D-6AB886D203F0}"
+
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibreriaRD2", "LibreriaRD2\LibreriaRD2.csproj", "{2880E565-E048-452D-A974-4689CAF2D61A}"
 
 EndProject
 Global
@@ -19,10 +23,10 @@ Global
 		{8F97E01C-7374-4EF5-8ED0-C6B06D7EE869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F97E01C-7374-4EF5-8ED0-C6B06D7EE869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F97E01C-7374-4EF5-8ED0-C6B06D7EE869}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B9AC4E4-3627-482A-AB4D-6AB886D203F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B9AC4E4-3627-482A-AB4D-6AB886D203F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B9AC4E4-3627-482A-AB4D-6AB886D203F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B9AC4E4-3627-482A-AB4D-6AB886D203F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2880E565-E048-452D-A974-4689CAF2D61A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2880E565-E048-452D-A974-4689CAF2D61A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2880E565-E048-452D-A974-4689CAF2D61A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2880E565-E048-452D-A974-4689CAF2D61A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
