@@ -70,7 +70,6 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                             newDrug.ID = Convert.ToInt32(fields[0]);
                             newDrug.Name = fields[1];
                             newDrug.Description = fields[2];
-
                             newDrug.Factory = fields[3];
                             newDrug.Price = fields[4];
                             newDrug.Stock = Convert.ToInt32((fields[5]));
