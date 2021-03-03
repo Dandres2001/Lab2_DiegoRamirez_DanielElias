@@ -11,13 +11,21 @@ namespace Lab2_DiegoRamirez_DanielElias.Models.Data
         private readonly static Singleton _instance = new Singleton();
         public Manual_List<Drug> DrugsList;
 
+        public Binarytree<Drug> Drugindex;
+
+
         public Manual_List<Drug> OrderedDrugs;
        
+
         private Singleton()
         {
             
             DrugsList = new Manual_List<Drug>();
+
+            Drugindex = new Binarytree<Drug>();
+
             OrderedDrugs = new Manual_List<Drug>();
+
 
         }
 
