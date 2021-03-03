@@ -4,10 +4,16 @@ using System.Text;
 
 namespace LibreriaRD2
 {
-    class Nodetree<T>
+
+    public class Nodetree<T>
 
     {
-  
 
+
+        public Nodetree<T> leftnode { get; set; }
+        public Nodetree<T> rightnode { get; set; }
+        public Nodetree<T> parent { get; set; }
+
+        public T Data { get; set; }
     }
 }

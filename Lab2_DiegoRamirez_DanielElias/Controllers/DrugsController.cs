@@ -7,18 +7,20 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
-
+using Lab2_DiegoRamirez_DanielElias.Models;
 using Lab2_DiegoRamirez_DanielElias.Models.Data;
 using Microsoft.VisualBasic;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
-
+using LibreriaRD2;
 
 namespace Lab2_DiegoRamirez_DanielElias.Controllers
 {
     public class DrugsController : Controller
     {
-
+        public static string preorderinfo = "";
+        Binarytree<Drug> index = new Binarytree<Drug>();
+        Manual_List<Drug> listita = new Manual_List<Drug>();
         IWebHostEnvironment hostingEnvironment;
         public DrugsController(IWebHostEnvironment hostingEnvironment)
         {
@@ -64,25 +66,41 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                     {
                         fields = csvReader.ReadFields();
                         var newDrug = new Models.Drug();
+                        var newDrug2  = new Models.Drug();
                         newDrug.ID = Convert.ToInt32(fields[0]);
                         newDrug.Name = fields[1];
                         newDrug.Description = fields[2];
                         newDrug.Factory = fields[3];
                         newDrug.Price = fields[4];
                         newDrug.Stock = Convert.ToInt32(fields[5]);
-                        Singleton.Instance.DrugsList.AddLast(newDrug);
-                        
-                    }
 
-                       
-               }
+                        newDrug2.ID = Convert.ToInt32(fields[0]);
+                        newDrug2.Name = fields[1];
+                        object obj = newDrug2;
+                        Func<Drug, int> Comparer = x => x.Name.CompareTo(newDrug2.Name);
+                        string name  = newDrug2.Name;
+                        Singleton.Instance.DrugsList.AddLast(newDrug);
+                        Singleton.Instance.Drugindex.insert(newDrug2);
+                        index.insert(newDrug2);
+                       preorderinfo= Singleton.Instance.Drugindex.preorder(index.root, preorderinfo);
+                  
+                    }
+              
+
+                }
             }
 
             return RedirectToAction("Index");
 
         }
 
+        public ActionResult GetLog()
+        {
 
+
+            return File(Encoding.UTF8.GetBytes(preorderinfo), "text/csv", "Log.txt");
+
+        }
         // GET: DrugsController
         public ActionResult Index()
         {
@@ -142,7 +160,10 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         {
             return View();
         }
-
+        public ActionResult Client()
+        {
+            return View();
+        }
         // POST: DrugsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

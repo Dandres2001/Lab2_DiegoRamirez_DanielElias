@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using LibreriaRD2;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lab2_DiegoRamirez_DanielElias.Models
 {
-    public class Drug
+    public class Drug : IComparable
     {
         [Required]
         public int ID { get; set; }
@@ -27,5 +27,10 @@ namespace Lab2_DiegoRamirez_DanielElias.Models
         [Required]
         public int Stock { get; set; }
 
+        public int CompareTo(object obj)
+        {
+            var  ordertree = ((Drug)obj).Name;
+            return ordertree.CompareTo(Name);
+        }
     }
 }

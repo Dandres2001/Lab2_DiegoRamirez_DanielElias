@@ -4,75 +4,130 @@ using System.Text;
 
 namespace LibreriaRD2
 {
-    public class Binarytree<T> : IEnumerable<T> where T : IComparable<T>
+    public class Binarytree<T> where  T:IComparable
     {
-        public Binarytree<T> leftree { get; private set; }
-        public Binarytree<T> rightree { get; private set; }
 
-        public T Node { get; private set; }
+        public Nodetree<T> root { get; set; }
+        //public Nodetree<T> parent { get; set; }
+        public Nodetree<T> before { get; set; }
+       public Nodetree<T> after { get; set; }
 
-        public Binarytree(T node)
+        public Nodetree<T> info { get; set; }
+        public bool insert(T value)
         {
-            this.Node = node;
-        }
-
-        public void insert(T item)
-        {
-            if (this.Node.CompareTo(item) > 0)
+             before = null;  
+           after = this.root;
+            
+            while (after != null)
             {
-                if (this.leftree == null)
+                before = after;
+           
+                if (after.Data.CompareTo(value)< 0)
                 {
-                    this.leftree = new Binarytree<T>(item);
+                    after = after.leftnode;
+                }
+                else if (after.Data.CompareTo(value) > 0)
+                {
+                    after = after.rightnode;
                 }
                 else
                 {
-                    this.leftree.insert(item);
+                    return false;
                 }
-
             }
+            Nodetree<T> newnode = new Nodetree<T>();
+            newnode.Data = value;
+            if (this.root == null)
+            {
+                this.root = newnode;
+            }
+            
             else
             {
-                if (this.rightree == null)
+                if (before.Data.CompareTo(value) <0)
                 {
-                    this.rightree = new Binarytree<T>(item);
+                    before.leftnode = newnode;
+              
                 }
                 else
                 {
-                    this.rightree.insert(item);
+                    before.rightnode = newnode;
+           
                 }
             }
+
+            return true;
         }
-
-
-
-        System.Collections.Generic.IEnumerator<T> IEnumerable<T>.GetEnumerator()
+     
+        public Nodetree<T> find(string value)
         {
-            if (this.leftree != null)
-            {
-                foreach (T item in this.leftree)
-                {
-                    yield return item;
-                }
-            }
-
-            yield return this.Node;
-
-            if (this.rightree != null)
-            {
-                foreach (T item in this.rightree)
-                {
-                    yield return item;
-                }
-            }
+            return this.find(value, this.root);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+     private Nodetree<T> find (string value , Nodetree<T> parent)
         {
-            throw new NotImplementedException();
+            if  (parent != null)
+            {
+                if (parent.Data.CompareTo(value) == 0)
+                {
+                    return parent;
+                }
+                if (parent.Data.CompareTo(value)< 0)
+                {
+                    return find(value, parent.leftnode);
+                }
+                else
+                {
+                    return find(value, parent.rightnode);
+                }
+            }
+            return null;
+        }
+       
+
+        
+        public string preorder(Nodetree<T> parent, string  info )
+        {
+            if  (parent != null)
+            {
+            
+              
+                info += parent.Data+"\n"; 
+                preorder(parent.leftnode,info);
+                preorder(parent.rightnode,info);
+            }
+            return info; 
+        
+        }
+  
+        public string  inorder(Nodetree<T> root, string info)
+        {
+            if (root != null)
+            {
+                inorder(root.leftnode, info);
+                info += root.Data + "\n";
+                inorder(root.rightnode, info);
+            }
+            return info; 
         }
 
+        public string postorder(Nodetree<T> root, string info)
+        {
+            if (root != null)
+            {
 
+             postorder(root.leftnode, info);
+                postorder(root.rightnode, info);
 
-    }
+                info += root.Data + "\n";
+             
+            }
+            return info;
+
+        }
+
+      
+    }  
 
 }
+
