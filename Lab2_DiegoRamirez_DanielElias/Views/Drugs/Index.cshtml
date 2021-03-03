@@ -5,6 +5,9 @@
 }
 
 <h1>Index</h1>
+<p>
+    <a asp-action="GetLog">Download preorder</a>
+</p>
 
 <p>
     <a asp-action="ReadFile">Upload Csv</a>
@@ -43,6 +46,36 @@
         </tr>
     </thead>
     <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Factory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -69,5 +102,6 @@
             </td>
         </tr>
 }
+
     </tbody>
 </table>
