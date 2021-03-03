@@ -12,6 +12,15 @@
 <p>
     <a asp-action="ReadFile">Upload Csv</a>
 </p>
+
+<form method="get" asp-action="dotnetList">
+    <p>
+        <input type="search" placeholder="Type name" value="@ViewData["GetDrug"]" name="searched" style="width:500px;" />
+        <input type="submit" value="Search" class="btn btn-outline-primary" />
+        
+    </p>
+
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -37,6 +46,7 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -65,5 +75,33 @@
                 </td>
             </tr>
         }
+
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Factory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.ActionLink("AddToOrder", "AddToOrder", new { id = item.ID }) 
+          
+            </td>
+        </tr>
+}
+
     </tbody>
 </table>

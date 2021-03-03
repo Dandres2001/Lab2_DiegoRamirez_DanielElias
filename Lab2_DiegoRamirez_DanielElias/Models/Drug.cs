@@ -26,6 +26,8 @@ namespace Lab2_DiegoRamirez_DanielElias.Models
 
         [Required]
         public int Stock { get; set; }
+        [Required]
+        public int OrderedQuantity { get; set; }
 
         public int CompareTo(object obj)
         {

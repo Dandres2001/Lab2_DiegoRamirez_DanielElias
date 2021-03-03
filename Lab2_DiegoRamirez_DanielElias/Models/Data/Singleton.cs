@@ -10,12 +10,14 @@ namespace Lab2_DiegoRamirez_DanielElias.Models.Data
     {
         private readonly static Singleton _instance = new Singleton();
         public Manual_List<Drug> DrugsList;
+
+        public Manual_List<Drug> OrderedDrugs;
        
         private Singleton()
         {
             
             DrugsList = new Manual_List<Drug>();
-          
+            OrderedDrugs = new Manual_List<Drug>();
 
         }
 
