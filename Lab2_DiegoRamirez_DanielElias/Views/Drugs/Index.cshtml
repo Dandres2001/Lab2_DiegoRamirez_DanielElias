@@ -9,6 +9,15 @@
 <p>
     <a asp-action="ReadFile">Upload Csv</a>
 </p>
+
+<form method="get" asp-action="dotnetList">
+    <p>
+        <input type="search" placeholder="Type name" value="@ViewData["GetDrug"]" name="searched" style="width:500px;" />
+        <input type="submit" value="Search" class="btn btn-outline-primary" />
+        
+    </p>
+
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -55,9 +64,8 @@
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("AddToOrder", "AddToOrder", new { id = item.ID }) 
+          
             </td>
         </tr>
 }
