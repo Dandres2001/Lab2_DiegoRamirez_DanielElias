@@ -103,6 +103,11 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
             TempData["alertMessage"] = "Order made successfully!";
             return View();
         }
+        public ActionResult Restocked()
+        {
+            TempData["alertMessage"] = "At least one medicine was restocked in the pharmacy";
+            return View();
+        }
         [HttpGet]
 
         [HttpGet]
@@ -212,6 +217,28 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
         }
 
+        public ActionResult ReStock()
+        {
+            Random random = new Random();
+            Drug drug;
+            int i;
+            for (i = 0; Singleton.Instance.DrugsList.Length > i; i++)
+            {
+                drug = Singleton.Instance.DrugsList.ElementAt(i);
+
+
+                if (drug.Stock == 0)
+                {
+                    drug.Stock = random.Next(1, 15);
+                    Restocked();
+                }
+
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
         public ActionResult GetLog()
         {
 
@@ -248,11 +275,6 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
 
                 search = collection["Name"]; 
-
-                
-
-              
-             
               
                 return RedirectToAction(nameof(AddToOrder));
 
