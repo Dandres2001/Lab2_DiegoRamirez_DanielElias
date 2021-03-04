@@ -22,7 +22,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         public static string preorderinfo = "";
         Binarytree<Drug> index = new Binarytree<Drug>();
         Manual_List<Drug> listita = new Manual_List<Drug>();
-
+   public static   string search;
         IWebHostEnvironment hostingEnvironment;
         public DrugsController(IWebHostEnvironment hostingEnvironment)
         {
@@ -35,50 +35,40 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         public ActionResult AddToOrder(int id)
         {
             Drug selected;
-            int i;
-            for ( i = 0; Singleton.Instance.DrugsList.Length > i; i++)
-            {
-                selected = Singleton.Instance.DrugsList.ElementAt(i);
 
 
-                if (selected.ID == id)
-                { 
-                    break;
-                }
+            var newDrug3 = new Models.Drug();
 
-            }
+            newDrug3.Name = search;
 
-            selected = Singleton.Instance.DrugsList.ElementAt(i);
+            selected = Singleton.Instance.DrugsList.ElementAt(Singleton.Instance.Drugindex.find(newDrug3, Singleton.Instance.Drugindex.root).Data.ID);
+
             return View(selected);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddToOrder(int id, IFormCollection collection)
         {
+            var newDrug3 = new Models.Drug();
 
+            newDrug3.Name = search;
 
             int i;
             try
             {
                 Drug selected;
 
-                for (i = 0; Singleton.Instance.DrugsList.Length > i; i++)
-                {
-                    selected = Singleton.Instance.DrugsList.ElementAt(i);
-                    if (selected.ID == id)
-                    { 
-                        break;
-                    }
-                }
+              
 
                 int quantity = Convert.ToInt32(collection["OrderedQuantity"]);
-                selected = Singleton.Instance.DrugsList.ElementAt(i);
+                selected = Singleton.Instance.DrugsList.ElementAt(Singleton.Instance.Drugindex.find(newDrug3, Singleton.Instance.Drugindex.root).Data.ID);
                 selected.OrderedQuantity = quantity;
 
                 if ((selected.OrderedQuantity <= selected.Stock)&& quantity != 0)
                 {
                     selected.Stock = selected.Stock - quantity ;
                     Singleton.Instance.OrderedDrugs.AddLast(selected);
+                    Drugadded();
                 }
                 else
                 {
@@ -96,6 +86,16 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         public ActionResult OutOfStockMessage()
         {
             TempData["alertMessage"] = "OUT OF STOCK!";
+            return View();
+        }
+        public ActionResult csvok()
+        {
+            TempData["alertMessage"] = "Csv imported successfully!";
+            return View();
+        }
+        public ActionResult Drugadded()
+        {
+            TempData["alertMessage"] = "Drug added to order!";
             return View();
         }
         public ActionResult ExportOrder()
@@ -120,8 +120,8 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
             double totalPrice = 0; ;
             string OrderText = "";
             OrderText += "Name: " + collection["Name"] + "\n";
-            OrderText += "Address" + collection["Address"] + "\n";
-            OrderText += "NIT " + collection["NIT"] + "\n";
+            OrderText += "Address: " + collection["Address"] + "\n";
+            OrderText += "NIT: " + collection["NIT"] + "\n";
             OrderText +=  "\n";
             OrderText += "Listed order: " + "\n" + "\n";
 
@@ -192,7 +192,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                         newDrug.Price = fields[4];
                         newDrug.Stock = Convert.ToInt32(fields[5]);
 
-                        newDrug2.ID = Convert.ToInt32(fields[0]);
+                        newDrug2.ID = Convert.ToInt32(fields[0])-1;
                         newDrug2.Name = fields[1];
                         object obj = newDrug2;
                         Func<Drug, int> Comparer = x => x.Name.CompareTo(newDrug2.Name);
@@ -207,7 +207,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
                 }
             }
-
+            csvok();
             return RedirectToAction("Index");
 
         }
@@ -222,79 +222,47 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         // GET: DrugsController
         public ActionResult Index()
         {
+          
+          
             return View(Singleton.Instance.DrugsList);
         }
 
         // GET: DrugsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: DrugsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: DrugsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DrugsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DrugsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DrugsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+      
         public ActionResult Client()
         {
             return View();
         }
         // POST: DrugsController/Delete/5
+        public ActionResult Search()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Search(IFormCollection collection)
         {
+
             try
             {
-                return RedirectToAction(nameof(Index));
+
+
+                search = collection["Name"]; 
+
+                
+
+              
+             
+              
+                return RedirectToAction(nameof(AddToOrder));
+
             }
             catch
             {
                 return View();
             }
+
         }
+
     }
 }

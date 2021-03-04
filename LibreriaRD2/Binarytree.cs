@@ -58,21 +58,18 @@ namespace LibreriaRD2
 
             return true;
         }
-     
-        public Nodetree<T> find(string value)
-        {
-            return this.find(value, this.root);
-        }
 
-     private Nodetree<T> find (string value , Nodetree<T> parent)
+
+        public Nodetree<T> find(T value, Nodetree<T> parent)
         {
-            if  (parent != null)
+
+            if (parent != null)
             {
                 if (parent.Data.CompareTo(value) == 0)
                 {
                     return parent;
                 }
-                if (parent.Data.CompareTo(value)< 0)
+                if (parent.Data.CompareTo(value) < 0)
                 {
                     return find(value, parent.leftnode);
                 }
@@ -83,9 +80,8 @@ namespace LibreriaRD2
             }
             return null;
         }
-       
 
-        
+
         public string preorder(Nodetree<T> parent, string  info )
         {
             if  (parent != null)

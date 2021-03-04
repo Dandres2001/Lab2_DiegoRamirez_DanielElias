@@ -9,99 +9,20 @@
     <a asp-action="GetLog">Download preorder</a>
 </p>
 
-<p>
-    <a asp-action="ReadFile">Upload Csv</a>
-</p>
 
-<form method="get" asp-action="dotnetList">
-    <p>
-        <input type="search" placeholder="Type name" value="@ViewData["GetDrug"]" name="searched" style="width:500px;" />
-        <input type="submit" value="Search" class="btn btn-outline-primary" />
-        
-    </p>
+<div class="form-group">
+<input type="submit" value=" Upload csv"onclick="location.href='@Url.Action("ReadFile", "Drugs")'" class="btn btn-outline-primary" />
+    </div>
+<div class="form-group">
+    <input type="submit" value=" Search drug" onclick="location.href='@Url.Action("Search", "Drugs")'" class="btn btn-outline-primary" />
+</div>
 
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Factory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Factory)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
 
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Factory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.ActionLink("AddToOrder", "AddToOrder", new { id = item.ID }) 
-          
-            </td>
-        </tr>
-}
 
-    </tbody>
-</table>
+    @if (null != TempData["alertMessage"])
+    {
+        <script type="text/javascript">
+       alert("@TempData["alertMessage"]");
+        </script>
+    }
