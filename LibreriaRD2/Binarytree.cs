@@ -8,7 +8,7 @@ namespace LibreriaRD2
     {
 
         public Nodetree<T> root { get; set; }
-        //public Nodetree<T> parent { get; set; }
+
         public Nodetree<T> before { get; set; }
        public Nodetree<T> after { get; set; }
 
@@ -111,45 +111,9 @@ namespace LibreriaRD2
 
         }
 
-        public string preorder(Nodetree<T> parent, string  info )
-        {
-            if  (parent != null)
-            {
-            
-              
-                info += parent.Data+"\n"; 
-                preorder(parent.leftnode,info);
-                preorder(parent.rightnode,info);
-            }
-            return info; 
-        
-        }
-  
-        public string  inorder(Nodetree<T> root, string info)
-        {
-            if (root != null)
-            {
-                inorder(root.leftnode, info);
-                info += root.Data + "\n";
-                inorder(root.rightnode, info);
-            }
-            return info; 
-        }
-
-        public string postorder(Nodetree<T> root, string info)
-        {
-            if (root != null)
-            {
-
-             postorder(root.leftnode, info);
-                postorder(root.rightnode, info);
-
-                info += root.Data + "\n";
-             
-            }
-            return info;
-
-        }
+    
+       
+      
 
         private T minvalue(Nodetree<T> node)
         {

@@ -5,10 +5,21 @@
 }
 
 <h1>Index</h1>
+<div>
 <p>
-    <a asp-action="GetLog">Download preorder</a>
+    <a asp-action="Getpreorder">Download preorder</a>
 </p>
-
+    </div>
+<div>
+    <p>
+        <a asp-action="Getinorder">Download inorder</a>
+    </p>
+</div>
+<div>
+    <p>
+        <a asp-action="Getpostorder">Download postorder</a>
+    </p>
+</div>
 
 <div class="form-group">
 <input type="submit" value=" Upload csv"onclick="location.href='@Url.Action("ReadFile", "Drugs")'" class="btn btn-outline-primary" />

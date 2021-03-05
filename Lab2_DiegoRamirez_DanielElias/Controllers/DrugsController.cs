@@ -18,11 +18,20 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 {
     public class DrugsController : Controller
     {
+   //variables
+        string preorderinfo = "";
+        string posorderinfo = "";
+        string inorderinfo = "";
 
-        public static string preorderinfo = "";
-        Binarytree<Drug> index = new Binarytree<Drug>();
-        Manual_List<Drug> listita = new Manual_List<Drug>();
-   public static   string search;
+        public static   string search;
+     
+
+
+
+
+
+
+
         IWebHostEnvironment hostingEnvironment;
         public DrugsController(IWebHostEnvironment hostingEnvironment)
         {
@@ -34,16 +43,29 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         [HttpGet]
         public ActionResult AddToOrder()
         {
-            Drug selected;
+            try
+            {
+                Drug selected;
 
 
             var newDrug3 = new Models.Drug();
 
             newDrug3.Name = search;
+  
+                selected = Singleton.Instance.DrugsList.ElementAt(Singleton.Instance.Drugindex.find(newDrug3, Singleton.Instance.Drugindex.root).Data.ID);
 
-            selected = Singleton.Instance.DrugsList.ElementAt(Singleton.Instance.Drugindex.find(newDrug3, Singleton.Instance.Drugindex.root).Data.ID);
 
-            return View(selected);
+                return View(selected);
+
+            }
+            
+            
+            catch
+            {
+
+            }
+            return null;
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -216,8 +238,8 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
                             Singleton.Instance.DrugsList.AddLast(newDrug);
                             Singleton.Instance.Drugindex.insert(newDrug2);
-                            index.insert(newDrug2);
-                            preorderinfo = Singleton.Instance.Drugindex.preorder(index.root, preorderinfo);
+                      
+                  
                         }
                         catch
                         {
@@ -260,11 +282,25 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
         }
 
-        public ActionResult GetLog()
+        public ActionResult Getpreorder()
         {
 
-
+            preorder(Singleton.Instance.Drugindex.root);
             return File(Encoding.UTF8.GetBytes(preorderinfo), "text/csv", "Log.txt");
+
+        }
+        public ActionResult Getinorder()
+        {
+
+            inorder(Singleton.Instance.Drugindex.root);
+            return File(Encoding.UTF8.GetBytes(inorderinfo), "text/csv", "Log.txt");
+
+        }
+        public ActionResult Getpostorder()
+        {
+
+            postorder(Singleton.Instance.Drugindex.root);
+            return File(Encoding.UTF8.GetBytes(posorderinfo), "text/csv", "Log.txt");
 
         }
         // GET: DrugsController
@@ -306,6 +342,44 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
             }
 
         }
+        public void preorder(Nodetree<Drug> parent)
+        {
+            if (parent != null)
+            {
+
+
+                preorderinfo += "Index: "+ parent.Data.ID+" product: "+ parent.Data.Name + "\n";
+                preorder(parent.leftnode);
+                preorder(parent.rightnode);
+            }
+
+
+        }
+        public void inorder(Nodetree<Drug> parent)
+        {
+            if (parent != null)
+            {
+                inorder(parent.leftnode );
+                inorderinfo += "Index: " + parent.Data.ID + " product: " + parent.Data.Name + "\n";
+                inorder(parent.rightnode);
+            }
+         
+        }
+        public void postorder(Nodetree<Drug> parent)
+        {
+            if (parent != null)
+            {
+
+                postorder(parent.leftnode);
+                postorder(parent.rightnode);
+
+                posorderinfo += "Index: " + parent.Data.ID + " product: " + parent.Data.Name + "\n";
+
+            }
+          
+
+        }
+
 
     }
 }
