@@ -286,21 +286,21 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         {
 
             preorder(Singleton.Instance.Drugindex.root);
-            return File(Encoding.UTF8.GetBytes(preorderinfo), "text/csv", "Log.txt");
+            return File(Encoding.UTF8.GetBytes(preorderinfo), "text/csv", "PreOrder.txt");
 
         }
         public ActionResult Getinorder()
         {
 
             inorder(Singleton.Instance.Drugindex.root);
-            return File(Encoding.UTF8.GetBytes(inorderinfo), "text/csv", "Log.txt");
+            return File(Encoding.UTF8.GetBytes(inorderinfo), "text/csv", "InOrder.txt");
 
         }
         public ActionResult Getpostorder()
         {
 
             postorder(Singleton.Instance.Drugindex.root);
-            return File(Encoding.UTF8.GetBytes(posorderinfo), "text/csv", "Log.txt");
+            return File(Encoding.UTF8.GetBytes(posorderinfo), "text/csv", "PostOrder.txt");
 
         }
         // GET: DrugsController
