@@ -81,6 +81,35 @@ namespace LibreriaRD2
             return null;
         }
 
+        public Nodetree<T> remove(Nodetree<T> parent , T key)
+        {
+            if (parent == null) { return parent; }
+
+            if (parent.Data.CompareTo(key) < 0)
+            {
+                parent.leftnode = remove(parent.leftnode, key); 
+
+            }
+            else  if (parent.Data.CompareTo(key) > 0)
+            {
+                parent.rightnode = remove(parent.rightnode, key);
+            }
+            else
+            {
+                if  (parent.leftnode == null)
+                {
+                    return parent.rightnode;
+                }
+                else  if (parent.rightnode == null)
+                {
+                    return parent.leftnode;
+                }
+                parent.Data = minvalue(parent.rightnode);
+                parent.rightnode = remove(parent.rightnode, parent.Data);
+            }
+            return parent;
+
+        }
 
         public string preorder(Nodetree<T> parent, string  info )
         {
@@ -120,6 +149,17 @@ namespace LibreriaRD2
             }
             return info;
 
+        }
+
+        private T minvalue(Nodetree<T> node)
+        {
+           T minv = node.Data;
+            while (node.leftnode!= null)
+            {
+                minv = node.leftnode.Data;
+                node = node.leftnode;
+            }
+            return minv;
         }
 
       

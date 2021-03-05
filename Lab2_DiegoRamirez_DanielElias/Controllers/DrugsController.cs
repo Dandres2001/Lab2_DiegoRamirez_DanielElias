@@ -32,7 +32,7 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
          
 
         [HttpGet]
-        public ActionResult AddToOrder(int id)
+        public ActionResult AddToOrder()
         {
             Drug selected;
 
@@ -47,13 +47,13 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddToOrder(int id, IFormCollection collection)
+        public ActionResult AddToOrder( IFormCollection collection)
         {
             var newDrug3 = new Models.Drug();
 
             newDrug3.Name = search;
 
-            int i;
+         
             try
             {
                 Drug selected;
@@ -69,13 +69,19 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
                     selected.Stock = selected.Stock - quantity ;
                     Singleton.Instance.OrderedDrugs.AddLast(selected);
                     Drugadded();
+                    if (selected.Stock == 0)
+                    {
+                        Singleton.Instance.Drugindex.remove(Singleton.Instance.Drugindex.root, newDrug3);
+                        remove();
+                    }
                 }
                 else
                 {
+                 
                     OutOfStockMessage();
                 }
 
-                return RedirectToAction(nameof(AddToOrder));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -91,6 +97,11 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         public ActionResult csvok()
         {
             TempData["alertMessage"] = "Csv imported successfully!";
+            return View();
+        }
+        public ActionResult remove()
+        {
+            TempData["alertMessage"] = "The item was removed from the index, if  you want you can restock ";
             return View();
         }
         public ActionResult Drugadded()
@@ -187,25 +198,31 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
 
                     while (!csvReader.EndOfData)
                     {
-                        fields = csvReader.ReadFields();
-                        var newDrug = new Models.Drug();
-                        var newDrug2  = new Models.Drug();
-                        newDrug.ID = Convert.ToInt32(fields[0]);
-                        newDrug.Name = fields[1];
-                        newDrug.Description = fields[2];
-                        newDrug.Factory = fields[3];
-                        newDrug.Price = fields[4];
-                        newDrug.Stock = Convert.ToInt32(fields[5]);
+                        try
+                        {
+                            fields = csvReader.ReadFields();
+                            var newDrug = new Models.Drug();
+                            var newDrug2 = new Models.Drug();
+                            newDrug.ID = Convert.ToInt32(fields[0]);
+                            newDrug.Name = fields[1];
+                            newDrug.Description = fields[2];
+                            newDrug.Factory = fields[3];
+                            newDrug.Price = fields[4];
+                            newDrug.Stock = Convert.ToInt32(fields[5]);
 
-                        newDrug2.ID = Convert.ToInt32(fields[0])-1;
-                        newDrug2.Name = fields[1];
-                        object obj = newDrug2;
-                        Func<Drug, int> Comparer = x => x.Name.CompareTo(newDrug2.Name);
-                        string name  = newDrug2.Name;
-                        Singleton.Instance.DrugsList.AddLast(newDrug);
-                        Singleton.Instance.Drugindex.insert(newDrug2);
-                        index.insert(newDrug2);
-                       preorderinfo= Singleton.Instance.Drugindex.preorder(index.root, preorderinfo);
+                            newDrug2.ID = Convert.ToInt32(fields[0]) - 1;
+                            newDrug2.Name = fields[1];
+                            object obj = newDrug2;
+
+                            Singleton.Instance.DrugsList.AddLast(newDrug);
+                            Singleton.Instance.Drugindex.insert(newDrug2);
+                            index.insert(newDrug2);
+                            preorderinfo = Singleton.Instance.Drugindex.preorder(index.root, preorderinfo);
+                        }
+                        catch
+                        {
+
+                        }
                   
                     }
               
@@ -221,15 +238,19 @@ namespace Lab2_DiegoRamirez_DanielElias.Controllers
         {
             Random random = new Random();
             Drug drug;
+            var newDrug = new Models.Drug();
             int i;
             for (i = 0; Singleton.Instance.DrugsList.Length > i; i++)
             {
                 drug = Singleton.Instance.DrugsList.ElementAt(i);
-
+                
 
                 if (drug.Stock == 0)
                 {
+                    newDrug.ID = Singleton.Instance.DrugsList.ElementAt(i).ID-1;
+                    newDrug.Name = Singleton.Instance.DrugsList.ElementAt(i).Name;
                     drug.Stock = random.Next(1, 15);
+                    Singleton.Instance.Drugindex.insert(newDrug);
                     Restocked();
                 }
 
